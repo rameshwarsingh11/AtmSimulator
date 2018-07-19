@@ -135,6 +135,7 @@ public class AtmSimulator {
 	private static float[] calculateDispenseCurrencyNotes(float amount) {
 		float currencyNote=availableCurrecy.pop();
 		int currencyNoteCount=(int) (amount/availableCurrecy.pop());
+		//TODO
 		
 		return null;
 	}
