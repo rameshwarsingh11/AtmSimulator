@@ -108,7 +108,7 @@ public class AtmSimulator {
 				break;
 			int ccyNotesValue = Integer.parseInt(ccyNotes);
 			if (ccyNotesValue == 10 || ccyNotesValue == 20 || ccyNotesValue == 50) {
-				System.out.println("Accpeted");
+				System.out.println("Accepted");
 				balance += ccyNotesValue;
 				totalCredit += ccyNotesValue;
 				continue;

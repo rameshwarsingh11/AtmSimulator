@@ -1,6 +1,6 @@
-The code file AtmSimulator contains common operations performed with ATM machine.
-AtmSimulator having main method to bootstrap the program.
-Followng options would be provided to user :
+The code file AtmSimulator contains common operations performed by ATM machine.
+AtmSimulator has a main method to bootstrap the program.
+Following options would be provided to user :
 
 1. Deposit
 2. Withdraw
@@ -22,11 +22,11 @@ Select an Option:
 Enter ccy to deposit terminated by. e.g. 10 20 50 .
 
 50
-Accpeted
+Accepted
 50
-Accpeted
+Accepted
 50
-Accpeted
+Accepted
 .
 1. Deposit
 2. Withdraw
