@@ -1,0 +1,78 @@
+The code file AtmSimulator contains common operations performed with ATM machine.
+AtmSimulator having main method to bootstrap the program.
+Followng options would be provided to user :
+
+1. Deposit
+2. Withdraw
+3. Display Balance
+4. Mini Statement
+5. Exit
+Select an Option:
+
+
+Sample execution of the program :::
+
+1. Deposit
+2. Withdraw
+3. Display Balance
+4. Mini Statement
+5. Exit
+Select an Option:
+1
+Enter ccy to deposit terminated by. e.g. 10 20 50 .
+
+50
+Accpeted
+50
+Accpeted
+50
+Accpeted
+.
+1. Deposit
+2. Withdraw
+3. Display Balance
+4. Mini Statement
+5. Exit
+Select an Option:
+3
+Available balance :150.0
+1. Deposit
+2. Withdraw
+3. Display Balance
+4. Mini Statement
+5. Exit
+Select an Option:
+2
+Enter amount to withdraw :
+100
+Dispensing : 50$
+Dispensing : 50$
+1. Deposit
+2. Withdraw
+3. Display Balance
+4. Mini Statement
+5. Exit
+Select an Option:
+3
+Available balance :50.0
+1. Deposit
+2. Withdraw
+3. Display Balance
+4. Mini Statement
+5. Exit
+Select an Option:
+4
+--------–----------------------------------------------------------------------------------------
+Date Time                      Transaction        Amount                Closing Balance
+--------–----------------------------------------------------------------------------------------
+Fri Jul 20 20:14:06 IST 2018          Credit        150.0             150.0
+Fri Jul 20 20:14:15 IST 2018          Debit        100.0             50.0
+-------------------–-----------------------------------------------------------------------------
+1. Deposit
+2. Withdraw
+3. Display Balance
+4. Mini Statement
+5. Exit
+Select an Option:
+5
+Thanks for banking with us today. Have a nice day !
