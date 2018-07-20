@@ -2,6 +2,12 @@ package com.yodlee.atm;
 
 import java.util.Date;
 
+/**
+ * Class to time stamp the Transaction made by customer.
+ * 
+ * @author Rameshwar Singh
+ *
+ */
 public class Transaction implements Comparable<Transaction> {
 	public Transaction(String transactionType, Date timeStamp, float transactionAmount, float balanceAfterTransaction) {
 		this.transactionType = transactionType;

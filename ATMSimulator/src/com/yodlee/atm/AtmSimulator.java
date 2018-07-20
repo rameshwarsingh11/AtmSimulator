@@ -1,16 +1,17 @@
 package com.yodlee.atm;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.TreeSet;
 
 /**
  * 
- * @author Rameshwar Singh
- *
+ * @author Rameshwar Singh Class to provide Deposit, withdraw, ministatements
+ *         facility of an ATM machine.
  */
-// TODO : add comments and logger.
 public class AtmSimulator {
 	private static float balance = 0.0f;
 	private static boolean creditDone = false;
@@ -18,18 +19,23 @@ public class AtmSimulator {
 	private static float totalCredit = 0.0f;
 	private static float totalDebit = 0.0f;
 	private static TreeSet<Transaction> transactionSet = new TreeSet<>();
-	private static final Stack<Float> availableCurrecy = new Stack<>();
+	private static final Stack<Integer> availableCurrency = new Stack<>();
 
-	public AtmSimulator() {
-		// TODO Auto-generated constructor stub
-	}
-
+	/**
+	 * bootstrap main method.
+	 * 
+	 * @param args
+	 *            String[]
+	 */
 	public static void main(String[] args) {
 		startMenuOptions();
 	}
 
+	/**
+	 * entry point method displaying options available to customer.
+	 */
 	private static void startMenuOptions() {
-		loadAtmMachine(availableCurrecy);
+		loadAtmMachine(availableCurrency);
 		System.out.println("1. Deposit");
 		System.out.println("2. Withdraw");
 		System.out.println("3. Display Balance");
@@ -42,12 +48,26 @@ public class AtmSimulator {
 		scanner.close();
 	}
 
-	private static void loadAtmMachine(Stack<Float> availablecurrecy) {
-		availablecurrecy.push(10.0f);
-		availablecurrecy.push(20.0f);
-		availablecurrecy.push(50.0f);
+	/**
+	 * Method to populate currency notes in ATM machine.
+	 * 
+	 * @param availablecurrecy
+	 *            Stack<Integer>
+	 */
+	private static void loadAtmMachine(Stack<Integer> availablecurrecy) {
+		availablecurrecy.push(10);
+		availablecurrecy.push(20);
+		availablecurrecy.push(50);
 	}
 
+	/**
+	 * method to process varous options as per requested by user.
+	 * 
+	 * @param option
+	 *            int
+	 * @param scanner
+	 *            Scanner
+	 */
 	private static void processOptions(int option, Scanner scanner) {
 		switch (option) {
 		case 1:
@@ -71,6 +91,12 @@ public class AtmSimulator {
 		startMenuOptions();
 	}
 
+	/**
+	 * method to process a deposit request made by customer.
+	 * 
+	 * @param scanner
+	 *            Scanner
+	 */
 	private static void processDepositRequest(Scanner scanner) {
 		System.out.println("Enter ccy to deposit terminated by. e.g. 10 20 50 .");
 		System.out.println("");
@@ -98,6 +124,13 @@ public class AtmSimulator {
 		}
 	}
 
+	/**
+	 * method to process mini statement display for the customer. It will show Debit
+	 * and Credit done on the account.
+	 * 
+	 * @param transactionSet
+	 *            TreeSet<Transaction>
+	 */
 	private static void processMiniStatementRequest(TreeSet<Transaction> transactionSet) {
 		System.out.println(
 				"--------–----------------------------------------------------------------------------------------");
@@ -112,16 +145,34 @@ public class AtmSimulator {
 				"-------------------–-----------------------------------------------------------------------------");
 	}
 
+	/**
+	 * method to display available balance in the account.
+	 * 
+	 * @param balance
+	 *            float
+	 * @return String balance amount
+	 */
 	private static String processDisplayBalanceRequest(float balance) {
 		return "Available balance :" + balance;
 	}
 
+	/**
+	 * method to process withdraw request made by customer.
+	 * 
+	 * @param scanner
+	 *            Scanner
+	 */
 	private static void processWithdrawRequest(Scanner scanner) {
 		System.out.println("Enter amount to withdraw :");
-		float amount = scanner.nextFloat();
+		int amount = scanner.nextInt();
+		Map<Integer, Integer> currencyMap = new HashMap<Integer, Integer>();
 		if (amount != 0 && amount <= balance) {
-			float dispenseCurrencyNotes[] = calculateDispenseCurrencyNotes(amount);
-			System.out.println("Dispensing : " + amount + "$");
+			currencyMap = calculateDispenseCurrencyNotes(amount, currencyMap);
+			for (int currency : currencyMap.keySet()) {
+				for (int i = 0; i < currencyMap.get(currency); i++) {
+					System.out.println("Dispensing : " + currency + "$");
+				}
+			}
 			balance -= amount;
 			totalDebit += amount;
 			debitDone = true;
@@ -132,11 +183,40 @@ public class AtmSimulator {
 		transactionSet.add(new Transaction("Debit", new Date(), totalDebit, balance));
 	}
 
-	private static float[] calculateDispenseCurrencyNotes(float amount) {
-		float currencyNote=availableCurrecy.pop();
-		int currencyNoteCount=(int) (amount/availableCurrecy.pop());
-		//TODO
-		
-		return null;
+	/**
+	 * method to calculate various dispensing notes for the requested amount.
+	 * 
+	 * @param amount
+	 *            int
+	 * @param currencyMap
+	 *            Map<Integer, Integer>
+	 * @return Map<Integer, Integer> . example { 50=1,20=2 }
+	 */
+	private static Map<Integer, Integer> calculateDispenseCurrencyNotes(int amount, Map<Integer, Integer> currencyMap) {
+		boolean isValidCurrency = true;
+		while (isValidCurrency) {
+			int currencyNote = availableCurrency.pop();
+			int currencyNoteCount = (int) (amount / currencyNote);
+			currencyMap.put(currencyNote, currencyNoteCount);
+			int nextCurrencyAmount = (int) (amount % currencyNote);
+			if (nextCurrencyAmount > 0) {
+				currencyNote = availableCurrency.pop();
+			}
+			amount = nextCurrencyAmount;
+			if (amount == 0) {
+				isValidCurrency = false;
+				break;
+			}
+			if (amount >= currencyNote) {
+				currencyNoteCount = (int) (amount / currencyNote);
+				currencyMap.put(currencyNote, currencyNoteCount);
+				nextCurrencyAmount = (int) (amount % currencyNote);
+				amount = nextCurrencyAmount;
+				isValidCurrency = true;
+				break;
+			}
+			isValidCurrency = false;
+		}
+		return currencyMap;
 	}
 }
