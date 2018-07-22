@@ -1,6 +1,7 @@
 package com.yodlee.atm;
 
 import java.util.Date;
+import java.util.TreeSet;
 
 /**
  * Class to time stamp the Transaction made by customer.
@@ -16,6 +17,7 @@ public class Transaction implements Comparable<Transaction> {
 		this.balanceAfterTransaction = balanceAfterTransaction;
 	}
 
+	private static TreeSet<Transaction> transactionSet = new TreeSet<>();
 	private String transactionType;
 	private Date timeStamp;
 	private float transactionAmount;
@@ -70,5 +72,20 @@ public class Transaction implements Comparable<Transaction> {
 			return 0;
 		}
 		return 1;
+	}
+
+	/**
+	 * @return the transactionSet
+	 */
+	public static TreeSet<Transaction> getTransactionSet() {
+		return transactionSet;
+	}
+
+	/**
+	 * @param transactionSet
+	 *            the transactionSet to set
+	 */
+	public static void setTransactionSet(TreeSet<Transaction> transactionSet) {
+		Transaction.transactionSet = transactionSet;
 	}
 }
